@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Add entries — The Football Ledger</title>
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <a class="back-link" href="index.html">&larr; back to the ledger</a>
+
+    <header class="masthead" style="padding-top:0.5rem;">
+      <h1 style="font-size:2.2rem;">Add an entry</h1>
+      <div class="tag">nations, matches, and images — no code editing required</div>
+    </header>
+
+    <p class="admin-intro">
+      This page runs entirely in your browser. Fill in a form, hit <strong>Add</strong>, and the ranking
+      preview below recalculates instantly using the same rating engine as the live site. When you're
+      happy, click <strong>Download</strong> to get an updated data file — drop it into your repo's
+      <code>/data</code> folder (drag-and-drop on github.com works fine) and commit. That's the only
+      manual step, since a page hosted on GitHub Pages can't write back to the repo by itself.
+    </p>
+
+    <h2 class="section-title">Add a nation</h2>
+    <form class="entry-form" id="team-form">
+      <div class="field-grid">
+        <div class="field">
+          <label for="t-id">ID (3 letters, unique)</label>
+          <input type="text" id="t-id" maxlength="8" placeholder="SWE" required />
+        </div>
+        <div class="field">
+          <label for="t-name">Name</label>
+          <input type="text" id="t-name" placeholder="Sweden" required />
+        </div>
+        <div class="field">
+          <label for="t-conf">Confederation</label>
+          <select id="t-conf" required>
+            <option value="UEFA">UEFA</option>
+            <option value="CONMEBOL">CONMEBOL</option>
+            <option value="CONCACAF">CONCACAF</option>
+            <option value="AFC">AFC</option>
+            <option value="CAF">CAF</option>
+            <option value="OFC">OFC</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="t-flag">Flag code (2 letters, optional)</label>
+          <input type="text" id="t-flag" maxlength="2" placeholder="se" />
+        </div>
+        <div class="field">
+          <label for="t-founded">Founded (optional)</label>
+          <input type="number" id="t-founded" placeholder="1904" />
+        </div>
+        <div class="field span-2">
+          <label for="t-logo">Logo image (optional)</label>
+          <input type="text" id="t-logo" placeholder="sweden.png (or a full image URL)" />
+          <input type="file" id="t-logo-file" accept="image/*" />
+          <span class="hint">Picking a file just fills in its name — you still need to copy that image into <code>images/teams/</code> in your repo with the exact same filename.</span>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button type="submit" class="btn">Add nation</button>
+        <button type="button" class="btn secondary" id="download-teams">Download teams.js</button>
+      </div>
+      <div class="status-msg" id="team-status"></div>
+    </form>
+
+    <h2 class="section-title">Add a match</h2>
+    <form class="entry-form" id="match-form">
+      <div class="field-grid">
+        <div class="field">
+          <label for="m-date">Date</label>
+          <input type="date" id="m-date" required />
+        </div>
+        <div class="field">
+          <label for="m-tournament">Competition</label>
+          <select id="m-tournament">
+            <option value="friendly">Friendly</option>
+            <option value="qualifier">Qualifier</option>
+            <option value="continental">Continental championship</option>
+            <option value="world_cup">World Cup</option>
+          </select>
+        </div>
+        <div class="field checkbox">
+          <input type="checkbox" id="m-neutral" />
+          <label for="m-neutral" style="font-family:var(--sans);font-size:0.85rem;color:var(--ink);">Played at a neutral venue</label>
+        </div>
+        <div class="field">
+          <label for="m-home">Home team</label>
+          <select id="m-home"></select>
+        </div>
+        <div class="field">
+          <label for="m-home-score">Home goals</label>
+          <input type="number" id="m-home-score" min="0" value="0" required />
+        </div>
+        <div class="field">
+          <label for="m-away">Away team</label>
+          <select id="m-away"></select>
+        </div>
+        <div class="field">
+          <label for="m-away-score">Away goals</label>
+          <input type="number" id="m-away-score" min="0" value="0" required />
+        </div>
+        <div class="field span-2">
+          <label for="m-note">Note (optional)</label>
+          <input type="text" id="m-note" placeholder="e.g. World Cup Final, Lusail" />
+        </div>
+        <div class="field span-2">
+          <label for="m-photo">Match photo (optional)</label>
+          <input type="text" id="m-photo" placeholder="1958-final.jpg (or a full image URL)" />
+          <input type="file" id="m-photo-file" accept="image/*" />
+          <span class="hint">Same idea as team logos — copy the actual image into <code>images/matches/</code> with this filename.</span>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button type="submit" class="btn">Add match</button>
+        <button type="button" class="btn secondary" id="download-matches">Download matches.js</button>
+      </div>
+      <div class="status-msg" id="match-status"></div>
+    </form>
+
+    <h2 class="section-title">Live ranking preview</h2>
+    <p class="preview-note" id="preview-note">Loading current data&hellip;</p>
+    <table class="ledger" id="preview-table">
+      <thead>
+        <tr><th>#</th><th>Nation</th><th>Confederation</th><th>Rating</th></tr>
+      </thead>
+      <tbody id="preview-body"></tbody>
+    </table>
+  </div>
+
+  <script src="data/teams.js"></script>
+  <script src="data/matches.js"></script>
+  <script src="js/util.js"></script>
+  <script src="js/elo.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

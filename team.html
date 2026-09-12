@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Team — The Football Ledger</title>
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <a class="back-link" href="index.html">&larr; back to the ledger</a>
+
+    <div id="content">
+      <p class="empty-state">Loading…</p>
+    </div>
+
+    <footer class="colophon">
+      Ratings recalculate from <code>data/matches.js</code> every time the page loads — add a result there
+      and it appears here automatically. See the <a href="README.md">README</a> for the data format.
+    </footer>
+  </div>
+
+  <script src="data/teams.js"></script>
+  <script src="data/matches.js"></script>
+  <script src="js/util.js"></script>
+  <script src="js/elo.js"></script>
+  <script src="js/team.js"></script>
+</body>
+</html>

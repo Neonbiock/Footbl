@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Football Ledger — World Rankings</title>
+<meta name="description" content="World football rankings built from full match history, grouped by confederation." />
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <header class="masthead">
+      <div class="masthead-row">
+        <div>
+          <h1>The Football Ledger</h1>
+          <div class="tag">a running record of every result, since 1872</div>
+        </div>
+        <nav><a href="admin.html">add entries</a> &nbsp; <a href="README.md">how it works</a></nav>
+      </div>
+    </header>
+
+    <div class="tabs" id="tabs" role="tablist" aria-label="Filter by confederation"></div>
+
+    <div class="search-row">
+      <input type="search" id="search" placeholder="Find a nation…" aria-label="Search nations" />
+      <label for="year-select" style="font-family:var(--mono);font-size:0.85rem;color:var(--ink-soft);">as of:</label>
+      <select id="year-select"></select>
+      <span class="count" id="count"></span>
+    </div>
+
+    <table class="ledger" id="ledger" aria-live="polite">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nation</th>
+          <th>Confederation</th>
+          <th>Rating</th>
+          <th>Form</th>
+        </tr>
+      </thead>
+      <tbody id="ledger-body"></tbody>
+    </table>
+
+    <div class="empty-state" id="empty" hidden>No nation matches that search.</div>
+
+    <footer class="colophon">
+      Ratings are calculated client-side from <code>data/matches.js</code>, chronologically, using a
+      World-Football-Elo-style formula (see <code>js/elo.js</code>). Add a nation to <code>data/teams.js</code>
+      and its results to <code>data/matches.js</code> to fold it into the ledger — no rebuild step needed.
+      Full instructions in the <a href="README.md">README</a>.
+    </footer>
+  </div>
+
+  <script src="data/teams.js"></script>
+  <script src="data/matches.js"></script>
+  <script src="js/util.js"></script>
+  <script src="js/elo.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
